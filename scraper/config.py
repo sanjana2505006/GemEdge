@@ -14,7 +14,7 @@ class Settings:
     title_selector: str = os.getenv("TITLE_SELECTOR", "h2")
     link_selector: str = os.getenv("LINK_SELECTOR", "a")
     price_selector: str = os.getenv("PRICE_SELECTOR", ".price")
-    detail_location_selector: str = os.getenv("DETAIL_LOCATION_SELECTOR", ".location")
+    detail_location_selector: str = os.getenv("DETAIL_LOCATION_SELECTOR", ".breadcrumb li:nth-child(3)")
     detail_description_selector: str = os.getenv("DETAIL_DESCRIPTION_SELECTOR", ".description")
     detail_category_selector: str = os.getenv("DETAIL_CATEGORY_SELECTOR", ".breadcrumb li:nth-child(3) a")
     detail_rating_selector: str = os.getenv("DETAIL_RATING_SELECTOR", ".star-rating")

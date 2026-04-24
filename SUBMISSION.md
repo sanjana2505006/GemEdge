@@ -1,4 +1,4 @@
-# Submission — GemEdge Data Scraping
+# GemEdge Scraping — Write-up
 
 **Name:** Sanjana
 **Email:** gopal@gemedge.dev
