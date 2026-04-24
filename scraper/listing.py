@@ -1,15 +1,76 @@
-"""Listing-page extraction (starter implementation)."""
+"""Listing-page extraction for initial milestone."""
 
-from typing import Any
+from urllib.parse import urljoin
+import re
+
+import requests
+from bs4 import BeautifulSoup, Tag
+from loguru import logger
+from requests import RequestException
+
+from scraper.config import settings
 
 
-def fetch_listing_items(_page: Any = None) -> list[dict[str, str]]:
-    """
-    Return starter listing data.
+def _item_id_from_url(item_url: str, idx: int) -> str:
+    match = re.search(r"/([^/?#]+)/?$", item_url)
+    if match:
+        return match.group(1)
+    return f"item-{idx}"
 
-    Replace this with real listing-page selectors once target site is finalized.
-    """
-    return [
-        {"id": "demo-1", "title": "Sample Item 1", "url": "https://example.com/item/1"},
-        {"id": "demo-2", "title": "Sample Item 2", "url": "https://example.com/item/2"},
-    ]
+
+def _extract_item(card: Tag, idx: int) -> dict[str, str] | None:
+    title_node = card.select_one(settings.title_selector)
+    link_node = card.select_one(settings.link_selector)
+    price_node = card.select_one(settings.price_selector)
+
+    if link_node is None or not link_node.get("href"):
+        return None
+
+    title = title_node.get_text(strip=True) if title_node else ""
+    item_url = urljoin(settings.base_url, str(link_node["href"]).strip())
+    price = price_node.get_text(strip=True) if price_node else ""
+
+    return {
+        "id": _item_id_from_url(item_url, idx),
+        "title": title or "Untitled",
+        "url": item_url,
+        "price": price or "N/A",
+    }
+
+
+def _build_page_url(page_num: int) -> str:
+    base_listing_url = urljoin(settings.base_url, settings.listing_path)
+    separator = "&" if "?" in base_listing_url else "?"
+    return f"{base_listing_url}{separator}page={page_num}"
+
+
+def fetch_listing_items() -> list[dict[str, str]]:
+    """Scrape listing pages and return minimal item records."""
+    results: list[dict[str, str]] = []
+    seen_urls: set[str] = set()
+
+    for page_num in range(1, settings.max_pages + 1):
+        page_url = _build_page_url(page_num)
+        logger.info("Fetching listing page {}", page_url)
+
+        try:
+            response = requests.get(page_url, timeout=20)
+            response.raise_for_status()
+        except RequestException as exc:
+            logger.error("Failed to fetch page {}: {}", page_num, exc)
+            break
+
+        soup = BeautifulSoup(response.text, "lxml")
+        cards = soup.select(settings.item_selector)
+        logger.info("Found {} cards on page {}", len(cards), page_num)
+
+        for idx, card in enumerate(cards, start=1):
+            parsed = _extract_item(card, idx)
+            if parsed is None:
+                continue
+            if parsed["url"] in seen_urls:
+                continue
+            seen_urls.add(parsed["url"])
+            results.append(parsed)
+
+    return results

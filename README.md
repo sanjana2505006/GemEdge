@@ -10,7 +10,23 @@ Current status:
 
 Run locally:
 1. `pip install -r requirements.txt`
-2. `python main.py`
+2. Set `.env` values (example below)
+3. `python main.py`
+
+Suggested `.env` for this milestone:
+- `BASE_URL=https://targetsite.com`
+- `LISTING_PATH=/listings`
+- `ITEM_SELECTOR=.listing-card`
+- `TITLE_SELECTOR=.listing-title`
+- `LINK_SELECTOR=a`
+- `PRICE_SELECTOR=.listing-price`
+- `MAX_PAGES=2`
+
+The scraper currently focuses only on listing data:
+- `id`
+- `title`
+- `url`
+- `price`
 
 Generated files:
 - `output/items.json`
