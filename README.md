@@ -1,32 +1,24 @@
-# GemEdge Assignment (Starter)
+# GemEdge Assignment
 
-This is a **minimal 10-20% scaffold** for a scraping assignment.
+This repo has the initial project setup (roughly 10-20% done).
 
-## Current structure
+Current status:
+- Basic scraper structure is in place
+- Pipeline runs end-to-end
+- Sample data is written to JSON and CSV
+- Logging is enabled
 
-- `main.py`: Entry point
-- `scraper/config.py`: Environment-based settings
-- `scraper/browser.py`: Browser session placeholder
-- `scraper/listing.py`: Listing extraction stub
-- `scraper/detail.py`: Detail extraction stub
-- `scraper/pipeline.py`: End-to-end orchestration + JSON/CSV output
-- `scraper/utils.py`: Utility helpers
+Run locally:
+1. `pip install -r requirements.txt`
+2. `python main.py`
 
-## Quick start
-
-1. Install dependencies in your virtual env:
-   - `pip install -r requirements.txt`
-2. Run:
-   - `python main.py`
-
-Outputs:
+Generated files:
 - `output/items.json`
 - `output/items.csv`
 - `logs/app.log`
 
-## Next (remaining 80-90%)
-
-- Replace placeholder extractors with real site selectors/API calls
-- Add retry/timeouts and robust error handling
-- Add pagination and deduplication
-- Add unit tests and data validation
+What is still pending:
+- Real listing/detail scraping logic
+- Pagination + deduplication
+- Better error handling/retries
+- Tests and validation checks
