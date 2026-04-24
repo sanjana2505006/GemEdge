@@ -59,8 +59,8 @@ def create_price_chart(data):
     fig = go.Figure(data=[go.Histogram(
         x=prices,
         nbinsx=15,
-        marker_color='#7c3aed',
-        opacity=0.8
+        marker_color='#0ea5e9',
+        opacity=0.85
     )])
     fig.update_layout(
         xaxis_title='Price (INR)',
@@ -85,12 +85,20 @@ def create_category_chart(data):
 
     category_counts = df['category'].value_counts().sort_values(ascending=True)
 
+    # Cycle through a palette of distinct colors
+    palette = [
+        '#6366f1', '#0ea5e9', '#10b981', '#f59e0b', '#ef4444',
+        '#8b5cf6', '#14b8a6', '#f97316', '#ec4899', '#84cc16',
+        '#06b6d4', '#a855f7', '#22c55e', '#eab308', '#3b82f6',
+    ]
+    colors = [palette[i % len(palette)] for i in range(len(category_counts))]
+
     fig = go.Figure(data=[go.Bar(
         x=category_counts.values.tolist(),
         y=category_counts.index.tolist(),
         orientation='h',
-        marker_color='#7c3aed',
-        opacity=0.8,
+        marker_color=colors,
+        opacity=0.9,
         text=category_counts.values.tolist(),
         textposition='outside',
     )])

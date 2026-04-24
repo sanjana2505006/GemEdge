@@ -13,7 +13,7 @@
             background: rgba(255, 255, 255, 0.9);
         }
         .gradient-bg {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
         }
         .hover-scale {
             transition: transform 0.2s;
@@ -46,7 +46,7 @@
                         <p class="text-purple-100 text-sm">Real-time data visualization and analysis</p>
                     </div>
                 </div>
-                <button onclick="refreshData()" class="bg-white text-purple-600 px-4 py-2 rounded-lg hover:bg-purple-50 transition duration-200">
+                <button onclick="refreshData()" class="bg-white text-sky-600 px-4 py-2 rounded-lg hover:bg-sky-50 transition duration-200">
                     <i class="fas fa-sync-alt mr-2"></i>Refresh Data
                 </button>
             </div>
@@ -133,7 +133,7 @@
             </div>
             
             <div class="mt-4 flex space-x-3">
-                <button onclick="applyFilters()" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition duration-200">
+                <button onclick="applyFilters()" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition duration-200">
                     <i class="fas fa-search mr-2"></i>Apply Filters
                 </button>
                 <button onclick="clearFilters()" class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition duration-200">
@@ -255,7 +255,7 @@
                         <div class="text-sm text-gray-600">${book.seller || 'Unknown'}</div>
                     </td>
                     <td class="px-4 py-3">
-                        <span class="px-2 py-1 text-xs font-medium bg-purple-100 text-purple-800 rounded-full">
+                        <span class="px-2 py-1 text-xs font-medium bg-sky-100 text-sky-800 rounded-full">
                             ${book.category || 'Unknown'}
                         </span>
                     </td>
