@@ -7,7 +7,7 @@ from loguru import logger
 
 from scraper.browser import browser_session
 from scraper.config import settings
-from scraper.detail import fetch_detail
+from scraper.detail import fetch_detail_with_status
 from scraper.listing import fetch_listing_items
 from scraper.utils import ensure_dirs, read_json, write_json
 
@@ -41,17 +41,35 @@ def run_pipeline() -> None:
             for item in listing_items
             if isinstance(item.get("url"), str) and item["url"] not in seen_urls
         ]
-        enriched_items = [fetch_detail(item) for item in new_items]
+        detail_results = [fetch_detail_with_status(item) for item in new_items]
+        enriched_items = [item for item, _ok in detail_results]
+        detail_success_count = sum(1 for _item, ok in detail_results if ok)
+        detail_failed_count = len(detail_results) - detail_success_count
 
     json_path = Path(settings.output_dir) / "items.json"
     csv_path = Path(settings.output_dir) / "items.csv"
     write_json(str(json_path), enriched_items)
     _write_csv(str(csv_path), enriched_items)
+    summary = {
+        "scraped_count": len(listing_items),
+        "new_count": len(new_items),
+        "already_seen_count": len(listing_items) - len(new_items),
+        "detail_success_count": detail_success_count,
+        "detail_failed_count": detail_failed_count,
+        "written_count": len(enriched_items),
+    }
+    run_summary_path = Path(settings.output_dir) / "run_summary.json"
+    write_json(str(run_summary_path), summary)
     seen_urls.update(
         str(item["url"])
         for item in listing_items
         if isinstance(item.get("url"), str) and item["url"]
     )
     write_json(str(seen_urls_path), sorted(seen_urls))
-    logger.info("Filtered {} already-seen items", len(listing_items) - len(new_items))
-    logger.info("Wrote {} enriched records", len(enriched_items))
+    logger.info("Filtered {} already-seen items", summary["already_seen_count"])
+    logger.info(
+        "Detail fetch success={}, failed={}",
+        summary["detail_success_count"],
+        summary["detail_failed_count"],
+    )
+    logger.info("Wrote {} enriched records", summary["written_count"])
