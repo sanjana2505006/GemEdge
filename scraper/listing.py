@@ -31,13 +31,15 @@ def _extract_item(card: Tag, idx: int) -> dict[str, object] | None:
     item_url = normalize_url(settings.base_url, str(link_node["href"]))
     price_text = normalize_text(price_node.get_text(strip=True) if price_node else "")
     price_value = parse_price_value(price_text)
+    price_inr = round(price_value * settings.eur_to_inr_rate, 2) if price_value is not None else None
 
     return {
         "id": _item_id_from_url(item_url, idx),
         "title": title or "Untitled",
         "url": item_url,
         "price": price_text or "N/A",
-        "price_value": price_value,
+        "price_eur": price_value,
+        "price_inr": price_inr,
     }
 
 

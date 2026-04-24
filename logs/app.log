@@ -34,3 +34,22 @@
 2026-04-24 16:53:38.560 | INFO     | scraper.pipeline:run_pipeline:69 - Filtered 0 already-seen items
 2026-04-24 16:53:38.561 | INFO     | scraper.pipeline:run_pipeline:70 - Detail fetch success=0, failed=0
 2026-04-24 16:53:38.561 | INFO     | scraper.pipeline:run_pipeline:75 - Wrote 0 enriched records
+2026-04-24 16:55:43.662 | INFO     | scraper.pipeline:run_pipeline:36 - Starting GemEdge scaffold pipeline
+2026-04-24 16:55:43.663 | INFO     | scraper.listing:fetch_listing_items:57 - Fetching listing page https://example.com/?page=1
+2026-04-24 16:55:44.503 | INFO     | scraper.listing:fetch_listing_items:67 - Found 0 cards on page 1
+2026-04-24 16:55:44.503 | INFO     | scraper.listing:fetch_listing_items:69 - Stopping pagination at page 1 (no cards found)
+2026-04-24 16:55:44.504 | INFO     | scraper.pipeline:run_pipeline:69 - Filtered 0 already-seen items
+2026-04-24 16:55:44.504 | INFO     | scraper.pipeline:run_pipeline:70 - Detail fetch success=0, failed=0
+2026-04-24 16:55:44.504 | INFO     | scraper.pipeline:run_pipeline:75 - Wrote 0 enriched records
+2026-04-24 17:01:38.145 | INFO     | scraper.pipeline:run_pipeline:36 - Starting GemEdge scaffold pipeline
+2026-04-24 17:01:38.145 | INFO     | scraper.listing:fetch_listing_items:57 - Fetching listing page https://books.toscrape.com/catalogue/page-1.html?page=1
+2026-04-24 17:01:40.851 | INFO     | scraper.listing:fetch_listing_items:67 - Found 20 cards on page 1
+2026-04-24 17:01:40.856 | INFO     | scraper.listing:fetch_listing_items:57 - Fetching listing page https://books.toscrape.com/catalogue/page-1.html?page=2
+2026-04-24 17:01:44.267 | INFO     | scraper.listing:fetch_listing_items:67 - Found 20 cards on page 2
+2026-04-24 17:01:44.272 | INFO     | scraper.listing:fetch_listing_items:84 - Stopping pagination at page 2 (no new unique items)
+2026-04-24 17:02:50.777 | INFO     | scraper.pipeline:run_pipeline:36 - Starting GemEdge scaffold pipeline
+2026-04-24 17:02:50.778 | INFO     | scraper.listing:fetch_listing_items:59 - Fetching listing page https://books.toscrape.com/catalogue/page-1.html?page=1
+2026-04-24 17:02:53.802 | ERROR    | scraper.listing:fetch_listing_items:64 - Failed to fetch page 1: HTTPSConnectionPool(host='books.toscrape.com', port=443): Max retries exceeded with url: /catalogue/page-1.html?page=1 (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connection failed: 403 Forbidden')))
+2026-04-24 17:02:53.804 | INFO     | scraper.pipeline:run_pipeline:69 - Filtered 0 already-seen items
+2026-04-24 17:02:53.806 | INFO     | scraper.pipeline:run_pipeline:70 - Detail fetch success=0, failed=0
+2026-04-24 17:02:53.807 | INFO     | scraper.pipeline:run_pipeline:75 - Wrote 0 enriched records

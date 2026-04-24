@@ -25,6 +25,7 @@ class Settings:
     retry_attempts: int = int(os.getenv("RETRY_ATTEMPTS", "3"))
     retry_min_wait_seconds: int = int(os.getenv("RETRY_MIN_WAIT_SECONDS", "1"))
     retry_max_wait_seconds: int = int(os.getenv("RETRY_MAX_WAIT_SECONDS", "5"))
+    eur_to_inr_rate: float = float(os.getenv("EUR_TO_INR_RATE", "90.0"))
     output_dir: str = os.getenv("OUTPUT_DIR", "output")
     seen_urls_file: str = os.getenv("SEEN_URLS_FILE", "output/seen_urls.json")
     logs_dir: str = os.getenv("LOGS_DIR", "logs")
