@@ -31,4 +31,4 @@ Fetch detail pages concurrently using async Playwright to cut runtime significan
 ---
 
 **Output files:** `output/items.csv`, `output/items.json`
-**GitHub:** *(add your repo link here)*
+**GitHub:** https://github.com/sanjana2505006/GemEdge
