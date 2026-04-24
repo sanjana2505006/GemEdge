@@ -10,6 +10,7 @@ from scraper.config import settings
 from scraper.detail import fetch_detail_with_status
 from scraper.listing import fetch_listing_items
 from scraper.utils import ensure_dirs, read_json, write_json
+import time
 
 
 DEFAULT_CSV_FIELDS = [
@@ -51,8 +52,8 @@ def run_pipeline() -> None:
     ]
 
     logger.info("Starting GemEdge scaffold pipeline")
-    with browser_session(headless=settings.headless):
-        listing_items = fetch_listing_items()
+    with browser_session(headless=settings.headless) as page:
+        listing_items = fetch_listing_items(page)
         new_items = [
             item
             for item in listing_items
@@ -66,7 +67,12 @@ def run_pipeline() -> None:
             pending_by_url[str(item["url"])] = item
         pending_items = list(pending_by_url.values())
 
-        detail_results = [fetch_detail_with_status(item) for item in pending_items]
+        detail_results = []
+        for item in pending_items:
+            # Add delay to avoid overwhelming the server
+            time.sleep(0.5)
+            detail_results.append(fetch_detail_with_status(item, page))
+        
         successful_items = [item for item, ok in detail_results if ok]
         failed_items = [item for item, ok in detail_results if not ok]
         detail_success_count = len(successful_items)

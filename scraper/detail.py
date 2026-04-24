@@ -1,26 +1,28 @@
 """Detail-page extraction for basic enrichment."""
 
 from bs4 import BeautifulSoup
-from requests import RequestException
+from playwright.sync_api import Page
 
 from scraper.config import settings
-from scraper.http import get_with_retry
 from scraper.utils import normalize_text
 
 
-def fetch_detail_with_status(item: dict[str, object]) -> tuple[dict[str, object], bool]:
-    """Fetch one detail page and return (item, success)."""
+def fetch_detail_with_status(item: dict[str, object], page: Page) -> tuple[dict[str, object], bool]:
+    """Fetch one detail page using Playwright and return (item, success)."""
     result = {**item, "location": "Unknown", "description": ""}
     url = normalize_text(str(item.get("url", "")))
     if not url:
         return result, False
 
     try:
-        response = get_with_retry(url)
-    except RequestException:
+        # Use Playwright to navigate and get content
+        page.goto(url, timeout=15000)
+        page.wait_for_load_state("domcontentloaded", timeout=5000)
+        html_content = page.content()
+    except Exception:
         return result, False
 
-    soup = BeautifulSoup(response.text, "lxml")
+    soup = BeautifulSoup(html_content, "lxml")
     location_node = soup.select_one(settings.detail_location_selector)
     description_node = soup.select_one(settings.detail_description_selector)
 
