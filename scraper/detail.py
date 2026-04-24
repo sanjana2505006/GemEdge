@@ -5,12 +5,13 @@ from requests import RequestException
 
 from scraper.config import settings
 from scraper.http import get_with_retry
+from scraper.utils import normalize_text
 
 
-def fetch_detail(item: dict[str, str]) -> dict[str, str]:
+def fetch_detail(item: dict[str, object]) -> dict[str, object]:
     """Fetch one detail page and append location/description fields."""
     result = {**item, "location": "Unknown", "description": ""}
-    url = item.get("url", "").strip()
+    url = normalize_text(str(item.get("url", "")))
     if not url:
         return result
 
@@ -24,8 +25,8 @@ def fetch_detail(item: dict[str, str]) -> dict[str, str]:
     description_node = soup.select_one(settings.detail_description_selector)
 
     if location_node is not None:
-        result["location"] = location_node.get_text(strip=True) or "Unknown"
+        result["location"] = normalize_text(location_node.get_text(strip=True)) or "Unknown"
     if description_node is not None:
-        result["description"] = description_node.get_text(strip=True)
+        result["description"] = normalize_text(description_node.get_text(strip=True))
 
     return result

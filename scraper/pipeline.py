@@ -12,7 +12,7 @@ from scraper.listing import fetch_listing_items
 from scraper.utils import ensure_dirs, write_json
 
 
-def _write_csv(path: str, rows: list[dict[str, str]]) -> None:
+def _write_csv(path: str, rows: list[dict[str, object]]) -> None:
     if not rows:
         return
     fieldnames = list(rows[0].keys())
