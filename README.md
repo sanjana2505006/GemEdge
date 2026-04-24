@@ -37,11 +37,67 @@ The pipeline runs in two stages:
 
 ## Setup & Run
 
+### Prerequisites
+- Python 3.10 or higher — [python.org/downloads](https://www.python.org/downloads/)
+- Git — [git-scm.com](https://git-scm.com/)
+
+---
+
+### macOS
+
 ```bash
+# 1. Clone the repo
+git clone <your-repo-url>
+cd GemEdge
+
+# 2. Create and activate virtual environment
+python3 -m venv venv
+source venv/bin/activate
+
+# 3. Install dependencies
 pip install -r requirements.txt
+
+# 4. Install Playwright browser
 playwright install chromium
+
+# 5. Run the scraper
 python main.py
+
+# 6. (Optional) Launch the dashboard
+python app.py
+# Then open http://127.0.0.1:5001 in your browser
 ```
+
+---
+
+### Windows
+
+```cmd
+# 1. Clone the repo
+git clone <your-repo-url>
+cd GemEdge
+
+# 2. Create and activate virtual environment
+python -m venv venv
+venv\Scripts\activate
+
+# 3. Install dependencies
+pip install -r requirements.txt
+
+# 4. Install Playwright browser
+playwright install chromium
+
+# 5. Run the scraper
+python main.py
+
+# 6. (Optional) Launch the dashboard
+python app.py
+# Then open http://127.0.0.1:5001 in your browser
+```
+
+---
+
+### Output
 
 Output files are written to `output/`:
 - `items.csv` — structured data in CSV format
