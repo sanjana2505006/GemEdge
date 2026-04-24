@@ -1,0 +1,18 @@
+[
+  {
+    "id": "demo-1",
+    "title": "Sample Item 1",
+    "url": "https://example.com/item/1",
+    "price": "N/A",
+    "location": "Unknown",
+    "description": "Placeholder detail for demo-1"
+  },
+  {
+    "id": "demo-2",
+    "title": "Sample Item 2",
+    "url": "https://example.com/item/2",
+    "price": "N/A",
+    "location": "Unknown",
+    "description": "Placeholder detail for demo-2"
+  }
+]
