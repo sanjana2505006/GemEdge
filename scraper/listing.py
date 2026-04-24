@@ -39,8 +39,6 @@ def _extract_item(card: Tag, idx: int) -> dict[str, object] | None:
         "title": title or "Untitled",
         "url": item_url,
         "price": price_inr_text,
-        "price_original": price_text or "N/A",
-        "price_eur": price_value,
         "price_inr": price_inr,
     }
 
