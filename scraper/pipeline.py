@@ -20,7 +20,9 @@ DEFAULT_CSV_FIELDS = [
     "url",
     "price",
     "price_inr",
-    "location",
+    "category",
+    "rating",
+    "availability",
     "description",
 ]
 

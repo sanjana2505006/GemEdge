@@ -2,9 +2,11 @@ playwright
 beautifulsoup4
 lxml
 requests
-pandas
 python-dotenv
 tenacity
 fake-useragent
 loguru
 tqdm
+flask
+plotly
+pandas

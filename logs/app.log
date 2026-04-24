@@ -350,3 +350,84 @@ Call log:
 2026-04-25 00:50:08.850 | INFO     | scraper.browser:browser_session:28 - Browser session started
 2026-04-25 00:50:08.860 | INFO     | scraper.listing:fetch_listing_items:87 - Fetching listing page https://books.toscrape.com/catalogue/page-1.html
 2026-04-25 00:50:08.860 | INFO     | scraper.listing:fetch_listing_items:91 - Navigating to: https://books.toscrape.com/catalogue/page-1.html
+2026-04-25 00:50:17.537 | INFO     | scraper.listing:fetch_listing_items:93 - Navigation response status: 200
+2026-04-25 00:50:17.549 | INFO     | scraper.listing:fetch_listing_items:95 - Page content length: 50180 chars
+2026-04-25 00:50:17.561 | INFO     | scraper.listing:fetch_listing_items:103 - Found 20 cards on page 1
+2026-04-25 00:50:17.566 | INFO     | scraper.listing:fetch_listing_items:87 - Fetching listing page https://books.toscrape.com/catalogue/page-2.html
+2026-04-25 00:50:17.566 | INFO     | scraper.listing:fetch_listing_items:91 - Navigating to: https://books.toscrape.com/catalogue/page-2.html
+2026-04-25 00:50:18.081 | INFO     | scraper.listing:fetch_listing_items:93 - Navigation response status: 200
+2026-04-25 00:50:18.084 | INFO     | scraper.listing:fetch_listing_items:95 - Page content length: 50576 chars
+2026-04-25 00:50:18.090 | INFO     | scraper.listing:fetch_listing_items:103 - Found 20 cards on page 2
+2026-04-25 00:52:12.974 | INFO     | scraper.browser:browser_session:40 - Browser session closed
+2026-04-25 00:52:12.979 | INFO     | scraper.pipeline:run_pipeline:146 - Filtered 0 already-seen items
+2026-04-25 00:52:12.979 | INFO     | scraper.pipeline:run_pipeline:147 - Retry queue in=0, out=0
+2026-04-25 00:52:12.979 | INFO     | scraper.pipeline:run_pipeline:152 - Detail fetch success=40, failed=0
+2026-04-25 00:52:12.979 | INFO     | scraper.pipeline:run_pipeline:157 - Wrote 40 enriched records
+2026-04-25 00:52:40.613 | INFO     | scraper.pipeline:run_pipeline:55 - Starting GemEdge scaffold pipeline
+2026-04-25 00:52:41.689 | INFO     | scraper.browser:browser_session:28 - Browser session started
+2026-04-25 00:52:41.700 | INFO     | scraper.listing:fetch_listing_items:87 - Fetching listing page https://books.toscrape.com/catalogue/page-1.html
+2026-04-25 00:52:41.700 | INFO     | scraper.listing:fetch_listing_items:91 - Navigating to: https://books.toscrape.com/catalogue/page-1.html
+2026-04-25 00:52:46.865 | INFO     | scraper.listing:fetch_listing_items:93 - Navigation response status: 200
+2026-04-25 00:52:46.874 | INFO     | scraper.listing:fetch_listing_items:95 - Page content length: 50180 chars
+2026-04-25 00:52:46.885 | INFO     | scraper.listing:fetch_listing_items:103 - Found 20 cards on page 1
+2026-04-25 00:52:46.890 | INFO     | scraper.listing:fetch_listing_items:87 - Fetching listing page https://books.toscrape.com/catalogue/page-2.html
+2026-04-25 00:52:46.890 | INFO     | scraper.listing:fetch_listing_items:91 - Navigating to: https://books.toscrape.com/catalogue/page-2.html
+2026-04-25 00:52:47.185 | INFO     | scraper.listing:fetch_listing_items:93 - Navigation response status: 200
+2026-04-25 00:52:47.189 | INFO     | scraper.listing:fetch_listing_items:95 - Page content length: 50576 chars
+2026-04-25 00:52:47.197 | INFO     | scraper.listing:fetch_listing_items:103 - Found 20 cards on page 2
+2026-04-25 00:52:47.232 | INFO     | scraper.browser:browser_session:40 - Browser session closed
+2026-04-25 00:52:47.233 | INFO     | scraper.pipeline:run_pipeline:146 - Filtered 40 already-seen items
+2026-04-25 00:52:47.233 | INFO     | scraper.pipeline:run_pipeline:147 - Retry queue in=0, out=0
+2026-04-25 00:52:47.233 | INFO     | scraper.pipeline:run_pipeline:152 - Detail fetch success=0, failed=0
+2026-04-25 00:52:47.233 | INFO     | scraper.pipeline:run_pipeline:157 - Wrote 0 enriched records
+2026-04-25 01:27:59.295 | INFO     | scraper.pipeline:run_pipeline:57 - Starting GemEdge scaffold pipeline
+2026-04-25 01:28:00.517 | INFO     | scraper.browser:browser_session:28 - Browser session started
+2026-04-25 01:28:00.526 | INFO     | scraper.listing:fetch_listing_items:87 - Fetching listing page https://books.toscrape.com/catalogue/page-1.html
+2026-04-25 01:28:00.527 | INFO     | scraper.listing:fetch_listing_items:91 - Navigating to: https://books.toscrape.com/catalogue/page-1.html
+2026-04-25 01:28:04.244 | INFO     | scraper.listing:fetch_listing_items:93 - Navigation response status: 200
+2026-04-25 01:28:04.255 | INFO     | scraper.listing:fetch_listing_items:95 - Page content length: 50180 chars
+2026-04-25 01:28:04.268 | INFO     | scraper.listing:fetch_listing_items:103 - Found 20 cards on page 1
+2026-04-25 01:28:04.273 | INFO     | scraper.listing:fetch_listing_items:87 - Fetching listing page https://books.toscrape.com/catalogue/page-2.html
+2026-04-25 01:28:04.273 | INFO     | scraper.listing:fetch_listing_items:91 - Navigating to: https://books.toscrape.com/catalogue/page-2.html
+2026-04-25 01:28:04.545 | INFO     | scraper.listing:fetch_listing_items:93 - Navigation response status: 200
+2026-04-25 01:28:04.550 | INFO     | scraper.listing:fetch_listing_items:95 - Page content length: 50576 chars
+2026-04-25 01:28:04.558 | INFO     | scraper.listing:fetch_listing_items:103 - Found 20 cards on page 2
+2026-04-25 01:28:04.606 | INFO     | scraper.browser:browser_session:40 - Browser session closed
+2026-04-25 01:28:04.608 | INFO     | scraper.pipeline:run_pipeline:148 - Filtered 40 already-seen items
+2026-04-25 01:28:04.608 | INFO     | scraper.pipeline:run_pipeline:149 - Retry queue in=0, out=0
+2026-04-25 01:28:04.608 | INFO     | scraper.pipeline:run_pipeline:154 - Detail fetch success=0, failed=0
+2026-04-25 01:28:04.608 | INFO     | scraper.pipeline:run_pipeline:159 - Wrote 0 enriched records
+2026-04-25 01:36:39.356 | INFO     | scraper.pipeline:run_pipeline:57 - Starting GemEdge scaffold pipeline
+2026-04-25 01:36:40.636 | INFO     | scraper.browser:browser_session:28 - Browser session started
+2026-04-25 01:36:40.645 | INFO     | scraper.listing:fetch_listing_items:87 - Fetching listing page https://books.toscrape.com/catalogue/page-1.html
+2026-04-25 01:36:40.645 | INFO     | scraper.listing:fetch_listing_items:91 - Navigating to: https://books.toscrape.com/catalogue/page-1.html
+2026-04-25 01:36:42.902 | INFO     | scraper.listing:fetch_listing_items:93 - Navigation response status: 200
+2026-04-25 01:36:42.910 | INFO     | scraper.listing:fetch_listing_items:95 - Page content length: 50180 chars
+2026-04-25 01:36:42.923 | INFO     | scraper.listing:fetch_listing_items:103 - Found 20 cards on page 1
+2026-04-25 01:36:42.928 | INFO     | scraper.listing:fetch_listing_items:87 - Fetching listing page https://books.toscrape.com/catalogue/page-2.html
+2026-04-25 01:36:42.928 | INFO     | scraper.listing:fetch_listing_items:91 - Navigating to: https://books.toscrape.com/catalogue/page-2.html
+2026-04-25 01:36:43.189 | INFO     | scraper.listing:fetch_listing_items:93 - Navigation response status: 200
+2026-04-25 01:36:43.193 | INFO     | scraper.listing:fetch_listing_items:95 - Page content length: 50576 chars
+2026-04-25 01:36:43.202 | INFO     | scraper.listing:fetch_listing_items:103 - Found 20 cards on page 2
+2026-04-25 01:36:43.241 | INFO     | scraper.browser:browser_session:40 - Browser session closed
+2026-04-25 01:36:43.243 | INFO     | scraper.pipeline:run_pipeline:148 - Filtered 40 already-seen items
+2026-04-25 01:36:43.243 | INFO     | scraper.pipeline:run_pipeline:149 - Retry queue in=0, out=0
+2026-04-25 01:36:43.243 | INFO     | scraper.pipeline:run_pipeline:154 - Detail fetch success=0, failed=0
+2026-04-25 01:36:43.243 | INFO     | scraper.pipeline:run_pipeline:159 - Wrote 0 enriched records
+2026-04-25 02:06:35.774 | INFO     | scraper.pipeline:run_pipeline:57 - Starting GemEdge scaffold pipeline
+2026-04-25 02:06:37.219 | INFO     | scraper.browser:browser_session:28 - Browser session started
+2026-04-25 02:06:37.229 | INFO     | scraper.listing:fetch_listing_items:87 - Fetching listing page https://books.toscrape.com/catalogue/page-1.html
+2026-04-25 02:06:37.230 | INFO     | scraper.listing:fetch_listing_items:91 - Navigating to: https://books.toscrape.com/catalogue/page-1.html
+2026-04-25 02:06:40.445 | INFO     | scraper.listing:fetch_listing_items:93 - Navigation response status: 200
+2026-04-25 02:06:40.455 | INFO     | scraper.listing:fetch_listing_items:95 - Page content length: 50180 chars
+2026-04-25 02:06:40.481 | INFO     | scraper.listing:fetch_listing_items:103 - Found 20 cards on page 1
+2026-04-25 02:06:40.487 | INFO     | scraper.listing:fetch_listing_items:87 - Fetching listing page https://books.toscrape.com/catalogue/page-2.html
+2026-04-25 02:06:40.487 | INFO     | scraper.listing:fetch_listing_items:91 - Navigating to: https://books.toscrape.com/catalogue/page-2.html
+2026-04-25 02:06:40.740 | INFO     | scraper.listing:fetch_listing_items:93 - Navigation response status: 200
+2026-04-25 02:06:40.744 | INFO     | scraper.listing:fetch_listing_items:95 - Page content length: 50576 chars
+2026-04-25 02:06:40.752 | INFO     | scraper.listing:fetch_listing_items:103 - Found 20 cards on page 2
+2026-04-25 02:06:40.790 | INFO     | scraper.browser:browser_session:40 - Browser session closed
+2026-04-25 02:06:40.792 | INFO     | scraper.pipeline:run_pipeline:148 - Filtered 40 already-seen items
+2026-04-25 02:06:40.792 | INFO     | scraper.pipeline:run_pipeline:149 - Retry queue in=0, out=0
+2026-04-25 02:06:40.792 | INFO     | scraper.pipeline:run_pipeline:154 - Detail fetch success=0, failed=0
+2026-04-25 02:06:40.792 | INFO     | scraper.pipeline:run_pipeline:159 - Wrote 0 enriched records
