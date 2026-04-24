@@ -482,3 +482,35 @@ Call log:
 2026-04-25 02:12:17.570 | INFO     | scraper.pipeline:run_pipeline:149 - Retry queue in=0, out=0
 2026-04-25 02:12:17.570 | INFO     | scraper.pipeline:run_pipeline:154 - Detail fetch success=40, failed=0
 2026-04-25 02:12:17.570 | INFO     | scraper.pipeline:run_pipeline:159 - Wrote 40 enriched records
+2026-04-25 02:26:12.725 | INFO     | scraper.pipeline:run_pipeline:59 - Starting GemEdge scaffold pipeline
+2026-04-25 02:26:13.928 | INFO     | scraper.browser:browser_session:28 - Browser session started
+2026-04-25 02:26:13.938 | INFO     | scraper.listing:fetch_listing_items:90 - Fetching listing page https://books.toscrape.com/catalogue/page-1.html
+2026-04-25 02:26:13.938 | INFO     | scraper.listing:fetch_listing_items:94 - Navigating to: https://books.toscrape.com/catalogue/page-1.html
+2026-04-25 02:26:16.392 | INFO     | scraper.listing:fetch_listing_items:96 - Navigation response status: 200
+2026-04-25 02:26:16.400 | INFO     | scraper.listing:fetch_listing_items:98 - Page content length: 50180 chars
+2026-04-25 02:26:16.413 | INFO     | scraper.listing:fetch_listing_items:106 - Found 20 cards on page 1
+2026-04-25 02:26:16.420 | INFO     | scraper.listing:fetch_listing_items:90 - Fetching listing page https://books.toscrape.com/catalogue/page-2.html
+2026-04-25 02:26:16.420 | INFO     | scraper.listing:fetch_listing_items:94 - Navigating to: https://books.toscrape.com/catalogue/page-2.html
+2026-04-25 02:26:16.774 | INFO     | scraper.listing:fetch_listing_items:96 - Navigation response status: 200
+2026-04-25 02:26:16.777 | INFO     | scraper.listing:fetch_listing_items:98 - Page content length: 50576 chars
+2026-04-25 02:26:16.786 | INFO     | scraper.listing:fetch_listing_items:106 - Found 20 cards on page 2
+2026-04-25 02:26:16.791 | INFO     | scraper.listing:fetch_listing_items:90 - Fetching listing page https://books.toscrape.com/catalogue/page-3.html
+2026-04-25 02:26:16.791 | INFO     | scraper.listing:fetch_listing_items:94 - Navigating to: https://books.toscrape.com/catalogue/page-3.html
+2026-04-25 02:26:17.209 | INFO     | scraper.listing:fetch_listing_items:96 - Navigation response status: 200
+2026-04-25 02:26:17.212 | INFO     | scraper.listing:fetch_listing_items:98 - Page content length: 51121 chars
+2026-04-25 02:26:17.220 | INFO     | scraper.listing:fetch_listing_items:106 - Found 20 cards on page 3
+2026-04-25 02:26:17.225 | INFO     | scraper.listing:fetch_listing_items:90 - Fetching listing page https://books.toscrape.com/catalogue/page-4.html
+2026-04-25 02:26:17.225 | INFO     | scraper.listing:fetch_listing_items:94 - Navigating to: https://books.toscrape.com/catalogue/page-4.html
+2026-04-25 02:26:17.468 | INFO     | scraper.listing:fetch_listing_items:96 - Navigation response status: 200
+2026-04-25 02:26:17.472 | INFO     | scraper.listing:fetch_listing_items:98 - Page content length: 52251 chars
+2026-04-25 02:26:17.480 | INFO     | scraper.listing:fetch_listing_items:106 - Found 20 cards on page 4
+2026-04-25 02:26:17.485 | INFO     | scraper.listing:fetch_listing_items:90 - Fetching listing page https://books.toscrape.com/catalogue/page-5.html
+2026-04-25 02:26:17.485 | INFO     | scraper.listing:fetch_listing_items:94 - Navigating to: https://books.toscrape.com/catalogue/page-5.html
+2026-04-25 02:26:17.949 | INFO     | scraper.listing:fetch_listing_items:96 - Navigation response status: 200
+2026-04-25 02:26:17.953 | INFO     | scraper.listing:fetch_listing_items:98 - Page content length: 51576 chars
+2026-04-25 02:26:17.973 | INFO     | scraper.listing:fetch_listing_items:106 - Found 20 cards on page 5
+2026-04-25 02:29:05.002 | INFO     | scraper.browser:browser_session:40 - Browser session closed
+2026-04-25 02:29:05.006 | INFO     | scraper.pipeline:run_pipeline:150 - Filtered 0 already-seen items
+2026-04-25 02:29:05.006 | INFO     | scraper.pipeline:run_pipeline:151 - Retry queue in=0, out=0
+2026-04-25 02:29:05.006 | INFO     | scraper.pipeline:run_pipeline:156 - Detail fetch success=100, failed=0
+2026-04-25 02:29:05.006 | INFO     | scraper.pipeline:run_pipeline:161 - Wrote 100 enriched records

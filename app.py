@@ -49,43 +49,61 @@ def create_price_chart(data):
     """Create a price distribution chart."""
     if not data:
         return None
-    
+
     df = pd.DataFrame(data)
     if 'price_inr' not in df.columns:
         return None
-    
-    fig = go.Figure(data=[go.Histogram(x=df['price_inr'], nbinsx=10)])
+
+    prices = df['price_inr'].dropna().tolist()
+
+    fig = go.Figure(data=[go.Histogram(
+        x=prices,
+        nbinsx=15,
+        marker_color='#7c3aed',
+        opacity=0.8
+    )])
     fig.update_layout(
-        title='Price Distribution (INR)',
         xaxis_title='Price (INR)',
         yaxis_title='Number of Books',
-        template='plotly_white'
+        template='plotly_white',
+        margin=dict(l=40, r=20, t=20, b=40),
+        bargap=0.05,
     )
-    
-    return json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+    fig.update_xaxes(tickprefix='₹', tickformat=',')
+
+    return json.dumps({'data': fig.to_dict()['data'], 'layout': fig.to_dict()['layout']},
+                      cls=plotly.utils.PlotlyJSONEncoder)
 
 def create_category_chart(data):
-    """Create a category distribution chart."""
+    """Create a category distribution bar chart."""
     if not data:
         return None
-    
+
     df = pd.DataFrame(data)
     if 'category' not in df.columns:
         return None
-    
-    category_counts = df['category'].value_counts()
-    
-    fig = go.Figure(data=[go.Pie(
-        labels=category_counts.index,
-        values=category_counts.values,
-        hole=0.3
+
+    category_counts = df['category'].value_counts().sort_values(ascending=True)
+
+    fig = go.Figure(data=[go.Bar(
+        x=category_counts.values.tolist(),
+        y=category_counts.index.tolist(),
+        orientation='h',
+        marker_color='#7c3aed',
+        opacity=0.8,
+        text=category_counts.values.tolist(),
+        textposition='outside',
     )])
     fig.update_layout(
-        title='Books by Category',
-        template='plotly_white'
+        xaxis_title='Number of Books',
+        yaxis_title='',
+        template='plotly_white',
+        margin=dict(l=120, r=40, t=20, b=40),
+        height=max(300, len(category_counts) * 22),
     )
-    
-    return json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+
+    return json.dumps({'data': fig.to_dict()['data'], 'layout': fig.to_dict()['layout']},
+                      cls=plotly.utils.PlotlyJSONEncoder)
 
 @app.route('/')
 def dashboard():

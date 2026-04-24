@@ -153,9 +153,9 @@
             
             <div class="card rounded-xl shadow-lg p-6 fade-in" style="animation-delay: 0.6s">
                 <h3 class="text-lg font-bold text-gray-800 mb-4">
-                    <i class="fas fa-chart-pie mr-2 text-green-500"></i>Books by Category
+                    <i class="fas fa-chart-bar mr-2 text-green-500"></i>Books by Category
                 </h3>
-                <div id="category-chart" style="height: 400px;"></div>
+                <div id="category-chart" style="height: 500px; overflow-y: auto;"></div>
             </div>
         </div>
 
@@ -204,11 +204,13 @@
         // Initialize charts
         function initCharts() {
             {% if price_chart %}
-            Plotly.newPlot('price-chart', {{ price_chart|safe }});
+            const priceChart = {{ price_chart|safe }};
+            Plotly.newPlot('price-chart', priceChart.data, priceChart.layout, {responsive: true});
             {% endif %}
             
             {% if category_chart %}
-            Plotly.newPlot('category-chart', {{ category_chart|safe }});
+            const categoryChart = {{ category_chart|safe }};
+            Plotly.newPlot('category-chart', categoryChart.data, categoryChart.layout, {responsive: true});
             {% endif %}
         }
         
@@ -246,8 +248,8 @@
                 const truncatedDesc = description.length > 100 ? description.substring(0, 100) + '...' : description;
                 
                 row.innerHTML = `
-                    <td class="px-4 py-3">
-                        <div class="font-medium text-gray-900">${book.title || 'Untitled'}</div>
+                    <td class="px-4 py-3" style="min-width: 200px; max-width: 280px;">
+                        <div class="font-medium text-gray-900" style="word-break: break-word; white-space: normal;">${book.title || 'Untitled'}</div>
                     </td>
                     <td class="px-4 py-3">
                         <div class="text-sm text-gray-600">${book.seller || 'Unknown'}</div>
@@ -261,7 +263,7 @@
                         <div class="font-medium text-green-600">${book.price || 'N/A'}</div>
                     </td>
                     <td class="px-4 py-3">
-                        <div class="text-sm text-yellow-600">${book.rating || 'N/A'}</div>
+                        <div class="text-sm text-yellow-500">${'★'.repeat(parseInt(book.rating) || 0)}${'☆'.repeat(5 - (parseInt(book.rating) || 0))} <span class="text-gray-400 text-xs">${book.rating || 'N/A'}</span></div>
                     </td>
                     <td class="px-4 py-3">
                         <div class="text-sm text-gray-600">${book.availability || 'Unknown'}</div>
