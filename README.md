@@ -109,3 +109,7 @@ Open [http://127.0.0.1:5001](http://127.0.0.1:5001) in your browser.
 - Selectors are config-driven but still need manual updates if the site changes its HTML
 - Detail pages are fetched one at a time — a worker pool would speed things up a lot
 - The INR conversion rate is static — hooking into a live FX API would keep it accurate
+
+---
+
+Made with ❤️ by Sanjana
