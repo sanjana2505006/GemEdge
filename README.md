@@ -25,20 +25,24 @@ Scraping runs in two stages:
 |---|---|
 | `id` | URL slug |
 | `title` | Listing page |
+| `seller` | Listing page |
 | `url` | Listing page |
 | `price` | Listing page (INR) |
 | `price_inr` | Listing page (numeric) |
 | `category` | Detail page |
 | `rating` | Detail page |
 | `availability` | Detail page |
+| `scraped_date` | Generated at runtime |
 | `description` | Detail page |
 
 ---
 
 ## Running on macOS
 
+Make sure you have Python 3.10+ installed. You can check by running `python3 --version` in your terminal. If not installed, download it from [python.org](https://www.python.org/downloads/).
+
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/sanjana2505006/GemEdge.git
 cd GemEdge
 
 python3 -m venv venv
@@ -50,20 +54,23 @@ playwright install chromium
 python main.py
 ```
 
-To view the dashboard:
+To view the dashboard, open a new terminal tab and run:
 
 ```bash
+source venv/bin/activate
 python app.py
 ```
 
-Open [http://127.0.0.1:5001](http://127.0.0.1:5001) in your browser.
+Then open [http://127.0.0.1:5001](http://127.0.0.1:5001) in your browser.
 
 ---
 
 ## Running on Windows
 
+Make sure you have Python 3.10+ installed. Download it from [python.org](https://www.python.org/downloads/) if needed. During installation, check the box that says **"Add Python to PATH"**.
+
 ```cmd
-git clone <your-repo-url>
+git clone https://github.com/sanjana2505006/GemEdge.git
 cd GemEdge
 
 python -m venv venv
@@ -75,13 +82,14 @@ playwright install chromium
 python main.py
 ```
 
-To view the dashboard:
+To view the dashboard, open a new terminal and run:
 
 ```cmd
+venv\Scripts\activate
 python app.py
 ```
 
-Open [http://127.0.0.1:5001](http://127.0.0.1:5001) in your browser.
+Then open [http://127.0.0.1:5001](http://127.0.0.1:5001) in your browser.
 
 ---
 
