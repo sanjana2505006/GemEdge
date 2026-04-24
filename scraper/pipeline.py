@@ -17,12 +17,14 @@ from tqdm import tqdm
 DEFAULT_CSV_FIELDS = [
     "id",
     "title",
+    "seller",
     "url",
     "price",
     "price_inr",
     "category",
     "rating",
     "availability",
+    "scraped_date",
     "description",
 ]
 

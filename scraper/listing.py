@@ -1,6 +1,7 @@
 """Listing-page extraction for initial milestone."""
 
 import re
+from datetime import date
 from urllib.parse import urljoin
 
 from bs4 import BeautifulSoup, Tag
@@ -30,7 +31,7 @@ def _extract_item(card: Tag, idx: int) -> dict[str, object] | None:
     if link_node is None or not link_node.get("href"):
         return None
 
-    title = normalize_text(title_node.get_text(strip=True) if title_node else "")
+    title = normalize_text(title_node.get("title", "") or title_node.get_text(strip=True) if title_node else "")
     href = str(link_node["href"])
     # Handle relative URLs - books.toscrape.com uses relative paths like ../../catalogue/book-name_123/index.html
     if href.startswith('/'):
@@ -52,9 +53,11 @@ def _extract_item(card: Tag, idx: int) -> dict[str, object] | None:
     return {
         "id": _item_id_from_url(item_url, idx),
         "title": title or "Untitled",
+        "seller": "Books to Scrape",
         "url": item_url,
         "price": price_inr_text,
         "price_inr": price_inr,
+        "scraped_date": date.today().isoformat(),
     }
 
 
