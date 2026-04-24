@@ -45,3 +45,15 @@ def parse_price_value(price_text: str) -> float | None:
         return float(raw)
     except ValueError:
         return None
+
+
+def read_json(path: str, default: object) -> object:
+    """Read JSON file and return default if missing/invalid."""
+    file_path = Path(path)
+    if not file_path.exists():
+        return default
+    try:
+        with open(file_path, "r", encoding="utf-8") as fp:
+            return json.load(fp)
+    except (json.JSONDecodeError, OSError):
+        return default

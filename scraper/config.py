@@ -26,6 +26,7 @@ class Settings:
     retry_min_wait_seconds: int = int(os.getenv("RETRY_MIN_WAIT_SECONDS", "1"))
     retry_max_wait_seconds: int = int(os.getenv("RETRY_MAX_WAIT_SECONDS", "5"))
     output_dir: str = os.getenv("OUTPUT_DIR", "output")
+    seen_urls_file: str = os.getenv("SEEN_URLS_FILE", "output/seen_urls.json")
     logs_dir: str = os.getenv("LOGS_DIR", "logs")
     headless: bool = os.getenv("HEADLESS", "true").lower() == "true"
 

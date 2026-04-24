@@ -23,3 +23,8 @@
 2026-04-24 13:56:50.891 | INFO     | scraper.listing:fetch_listing_items:57 - Fetching listing page https://example.com/?page=1
 2026-04-24 13:56:53.939 | ERROR    | scraper.listing:fetch_listing_items:62 - Failed to fetch page 1: HTTPSConnectionPool(host='example.com', port=443): Max retries exceeded with url: /?page=1 (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connection failed: 403 Forbidden')))
 2026-04-24 13:56:53.940 | INFO     | scraper.pipeline:run_pipeline:40 - Wrote 0 enriched records
+2026-04-24 14:00:00.882 | INFO     | scraper.pipeline:run_pipeline:36 - Starting GemEdge scaffold pipeline
+2026-04-24 14:00:00.882 | INFO     | scraper.listing:fetch_listing_items:57 - Fetching listing page https://example.com/?page=1
+2026-04-24 14:00:03.914 | ERROR    | scraper.listing:fetch_listing_items:62 - Failed to fetch page 1: HTTPSConnectionPool(host='example.com', port=443): Max retries exceeded with url: /?page=1 (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connection failed: 403 Forbidden')))
+2026-04-24 14:00:03.917 | INFO     | scraper.pipeline:run_pipeline:56 - Filtered 0 already-seen items
+2026-04-24 14:00:03.918 | INFO     | scraper.pipeline:run_pipeline:57 - Wrote 0 enriched records
