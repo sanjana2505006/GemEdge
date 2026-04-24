@@ -1,9 +1,9 @@
 {
-  "scraped_count": 0,
+  "scraped_count": 40,
   "new_count": 0,
   "retry_queue_in_count": 0,
   "processed_detail_count": 0,
-  "already_seen_count": 0,
+  "already_seen_count": 40,
   "detail_success_count": 0,
   "detail_failed_count": 0,
   "retry_queue_out_count": 0,

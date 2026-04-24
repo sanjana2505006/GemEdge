@@ -11,6 +11,7 @@ from scraper.config import settings
 from scraper.utils import normalize_text, normalize_url, parse_price_value
 from playwright.sync_api import Page
 import asyncio
+from tqdm import tqdm
 
 
 def _item_id_from_url(item_url: str, idx: int) -> str:
@@ -72,8 +73,17 @@ def fetch_listing_items(page: Page) -> list[dict[str, object]]:
     results: list[dict[str, object]] = []
     seen_urls: set[str] = set()
 
-    for page_num in range(1, settings.max_pages + 1):
+    # Create progress bar for pages
+    page_progress = tqdm(
+        range(1, settings.max_pages + 1),
+        desc="📄 Scraping pages",
+        unit="page",
+        dynamic_ncols=True
+    )
+
+    for page_num in page_progress:
         page_url = _build_page_url(page_num)
+        page_progress.set_postfix_str(f"Page {page_num}")
         logger.info("Fetching listing page {}", page_url)
 
         try:
@@ -85,6 +95,7 @@ def fetch_listing_items(page: Page) -> list[dict[str, object]]:
             logger.info("Page content length: {} chars", len(html_content))
         except Exception as exc:
             logger.error("Failed to fetch page {}: {}", page_num, exc)
+            page_progress.close()
             break
 
         soup = BeautifulSoup(html_content, "lxml")
@@ -92,10 +103,20 @@ def fetch_listing_items(page: Page) -> list[dict[str, object]]:
         logger.info("Found {} cards on page {}", len(cards), page_num)
         if not cards:
             logger.info("Stopping pagination at page {} (no cards found)", page_num)
+            page_progress.close()
             break
 
+        # Progress bar for items on current page
+        item_progress = tqdm(
+            cards,
+            desc=f"📚 Page {page_num} items",
+            unit="item",
+            leave=False,
+            dynamic_ncols=True
+        )
+
         page_new_count = 0
-        for idx, card in enumerate(cards, start=1):
+        for idx, card in enumerate(item_progress, start=1):
             parsed = _extract_item(card, idx)
             if parsed is None:
                 continue
@@ -104,12 +125,20 @@ def fetch_listing_items(page: Page) -> list[dict[str, object]]:
             seen_urls.add(parsed["url"])
             results.append(parsed)
             page_new_count += 1
+            item_progress.set_postfix_str(f"New: {page_new_count}")
+
+        item_progress.close()
 
         if page_new_count == 0:
             logger.info(
                 "Stopping pagination at page {} (no new unique items)",
                 page_num,
             )
+            page_progress.close()
             break
 
+        # Update main progress with total items found so far
+        page_progress.set_postfix_str(f"Items: {len(results)}")
+
+    page_progress.close()
     return results

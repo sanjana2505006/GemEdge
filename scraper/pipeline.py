@@ -11,6 +11,7 @@ from scraper.detail import fetch_detail_with_status
 from scraper.listing import fetch_listing_items
 from scraper.utils import ensure_dirs, read_json, write_json
 import time
+from tqdm import tqdm
 
 
 DEFAULT_CSV_FIELDS = [
@@ -67,21 +68,55 @@ def run_pipeline() -> None:
             pending_by_url[str(item["url"])] = item
         pending_items = list(pending_by_url.values())
 
+        # Progress bar for detail page extraction
+        detail_progress = tqdm(
+            pending_items,
+            desc="🔍 Extracting details",
+            unit="page",
+            dynamic_ncols=True
+        )
+        
         detail_results = []
-        for item in pending_items:
+        success_count = 0
+        for item in detail_progress:
             # Add delay to avoid overwhelming the server
             time.sleep(0.5)
-            detail_results.append(fetch_detail_with_status(item, page))
+            result, success = fetch_detail_with_status(item, page)
+            detail_results.append((result, success))
+            
+            if success:
+                success_count += 1
+            
+            # Update progress with success rate
+            success_rate = (success_count / len(detail_results)) * 100
+            detail_progress.set_postfix_str(f"Success: {success_count}/{len(detail_results)} ({success_rate:.1f}%)")
+        
+        detail_progress.close()
         
         successful_items = [item for item, ok in detail_results if ok]
         failed_items = [item for item, ok in detail_results if not ok]
         detail_success_count = len(successful_items)
         detail_failed_count = len(failed_items)
 
+    # Final summary progress bar
+    summary_progress = tqdm(
+        total=4,
+        desc="📊 Finalizing",
+        unit="step",
+        dynamic_ncols=True
+    )
+    
+    summary_progress.set_description("💾 Saving JSON")
     json_path = Path(settings.output_dir) / "items.json"
-    csv_path = Path(settings.output_dir) / "items.csv"
     write_json(str(json_path), successful_items)
+    summary_progress.update(1)
+    
+    summary_progress.set_description("📋 Saving CSV")
+    csv_path = Path(settings.output_dir) / "items.csv"
     _write_csv(str(csv_path), successful_items)
+    summary_progress.update(1)
+    
+    summary_progress.set_description("📈 Generating summary")
     summary = {
         "scraped_count": len(listing_items),
         "new_count": len(new_items),
@@ -95,11 +130,19 @@ def run_pipeline() -> None:
     }
     run_summary_path = Path(settings.output_dir) / "run_summary.json"
     write_json(str(run_summary_path), summary)
+    summary_progress.update(1)
+    
+    summary_progress.set_description("🔚 Updating state")
     seen_urls.update(
         str(item["url"]) for item in successful_items if isinstance(item.get("url"), str) and item["url"]
     )
     write_json(str(seen_urls_path), sorted(seen_urls))
     write_json(str(failed_items_path), failed_items)
+    summary_progress.update(1)
+    
+    summary_progress.set_postfix_str(f"✅ {summary['written_count']} items saved")
+    summary_progress.close()
+    
     logger.info("Filtered {} already-seen items", summary["already_seen_count"])
     logger.info(
         "Retry queue in={}, out={}",
