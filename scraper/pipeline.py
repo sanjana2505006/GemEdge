@@ -12,14 +12,26 @@ from scraper.listing import fetch_listing_items
 from scraper.utils import ensure_dirs, read_json, write_json
 
 
+DEFAULT_CSV_FIELDS = [
+    "id",
+    "title",
+    "url",
+    "price",
+    "price_original",
+    "price_eur",
+    "price_inr",
+    "location",
+    "description",
+]
+
+
 def _write_csv(path: str, rows: list[dict[str, object]]) -> None:
-    if not rows:
-        return
-    fieldnames = list(rows[0].keys())
+    fieldnames = list(rows[0].keys()) if rows else DEFAULT_CSV_FIELDS
     with open(path, "w", encoding="utf-8", newline="") as fp:
         writer = csv.DictWriter(fp, fieldnames=fieldnames)
         writer.writeheader()
-        writer.writerows(rows)
+        if rows:
+            writer.writerows(rows)
 
 
 def run_pipeline() -> None:
