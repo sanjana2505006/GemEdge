@@ -27,6 +27,9 @@ The scraper currently focuses only on listing data:
 - `title`
 - `url`
 - `price`
+- plus small detail enrichment:
+  - `location`
+  - `description`
 
 Generated files:
 - `output/items.json`

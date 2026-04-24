@@ -18,6 +18,8 @@ class Settings:
     title_selector: str = os.getenv("TITLE_SELECTOR", "h2")
     link_selector: str = os.getenv("LINK_SELECTOR", "a")
     price_selector: str = os.getenv("PRICE_SELECTOR", ".price")
+    detail_location_selector: str = os.getenv("DETAIL_LOCATION_SELECTOR", ".location")
+    detail_description_selector: str = os.getenv("DETAIL_DESCRIPTION_SELECTOR", ".description")
     max_pages: int = int(os.getenv("MAX_PAGES", "2"))
     output_dir: str = os.getenv("OUTPUT_DIR", "output")
     logs_dir: str = os.getenv("LOGS_DIR", "logs")
