@@ -1,10 +1,10 @@
 """Detail-page extraction for basic enrichment."""
 
-import requests
 from bs4 import BeautifulSoup
 from requests import RequestException
 
 from scraper.config import settings
+from scraper.http import get_with_retry
 
 
 def fetch_detail(item: dict[str, str]) -> dict[str, str]:
@@ -15,8 +15,7 @@ def fetch_detail(item: dict[str, str]) -> dict[str, str]:
         return result
 
     try:
-        response = requests.get(url, timeout=20)
-        response.raise_for_status()
+        response = get_with_retry(url)
     except RequestException:
         return result
 

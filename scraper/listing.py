@@ -3,12 +3,12 @@
 from urllib.parse import urljoin
 import re
 
-import requests
 from bs4 import BeautifulSoup, Tag
 from loguru import logger
 from requests import RequestException
 
 from scraper.config import settings
+from scraper.http import get_with_retry
 
 
 def _item_id_from_url(item_url: str, idx: int) -> str:
@@ -54,8 +54,7 @@ def fetch_listing_items() -> list[dict[str, str]]:
         logger.info("Fetching listing page {}", page_url)
 
         try:
-            response = requests.get(page_url, timeout=20)
-            response.raise_for_status()
+            response = get_with_retry(page_url)
         except RequestException as exc:
             logger.error("Failed to fetch page {}: {}", page_num, exc)
             break
@@ -63,7 +62,11 @@ def fetch_listing_items() -> list[dict[str, str]]:
         soup = BeautifulSoup(response.text, "lxml")
         cards = soup.select(settings.item_selector)
         logger.info("Found {} cards on page {}", len(cards), page_num)
+        if not cards:
+            logger.info("Stopping pagination at page {} (no cards found)", page_num)
+            break
 
+        page_new_count = 0
         for idx, card in enumerate(cards, start=1):
             parsed = _extract_item(card, idx)
             if parsed is None:
@@ -72,5 +75,13 @@ def fetch_listing_items() -> list[dict[str, str]]:
                 continue
             seen_urls.add(parsed["url"])
             results.append(parsed)
+            page_new_count += 1
+
+        if page_new_count == 0:
+            logger.info(
+                "Stopping pagination at page {} (no new unique items)",
+                page_num,
+            )
+            break
 
     return results
