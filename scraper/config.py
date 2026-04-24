@@ -25,9 +25,16 @@ class Settings:
     retry_attempts: int = int(os.getenv("RETRY_ATTEMPTS", "3"))
     retry_min_wait_seconds: int = int(os.getenv("RETRY_MIN_WAIT_SECONDS", "1"))
     retry_max_wait_seconds: int = int(os.getenv("RETRY_MAX_WAIT_SECONDS", "5"))
-    eur_to_inr_rate: float = float(os.getenv("EUR_TO_INR_RATE", "90.0"))
+    request_delay_min_seconds: float = float(os.getenv("REQUEST_DELAY_MIN_SECONDS", "0.6"))
+    request_delay_max_seconds: float = float(os.getenv("REQUEST_DELAY_MAX_SECONDS", "1.8"))
+    rotate_user_agent: bool = os.getenv("ROTATE_USER_AGENT", "true").lower() == "true"
+    eur_to_inr_rate: float = float(os.getenv("EUR_TO_INR_RATE", "109.86"))
     output_dir: str = os.getenv("OUTPUT_DIR", "output")
     seen_urls_file: str = os.getenv("SEEN_URLS_FILE", "output/seen_urls.json")
+    failed_detail_items_file: str = os.getenv(
+        "FAILED_DETAIL_ITEMS_FILE",
+        "output/failed_detail_items.json",
+    )
     logs_dir: str = os.getenv("LOGS_DIR", "logs")
     headless: bool = os.getenv("HEADLESS", "true").lower() == "true"
 
