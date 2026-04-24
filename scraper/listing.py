@@ -1,26 +1,27 @@
-"""Listing-page extraction for initial milestone."""
-
 import re
 from datetime import date
 from urllib.parse import urljoin
 
 from bs4 import BeautifulSoup, Tag
 from loguru import logger
-from requests import RequestException
+from playwright.sync_api import Page
+from tqdm import tqdm
 
 from scraper.config import settings
 from scraper.utils import normalize_text, normalize_url, parse_price_value
-from playwright.sync_api import Page
-import asyncio
-from tqdm import tqdm
 
 
-def _item_id_from_url(item_url: str, idx: int) -> str:
-    # Extract the book ID from URLs like http://books.toscrape.com/catalogue/book-name_123/index.html
-    match = re.search(r"/([^/]+)_\d+/index\.html$", item_url)
-    if match:
-        return match.group(1)
-    return f"item-{idx}"
+def _id_from_url(url: str, idx: int) -> str:
+    match = re.search(r"/([^/]+)_\d+/index\.html$", url)
+    return match.group(1) if match else f"item-{idx}"
+
+
+def _build_url(href: str) -> str:
+    if href.startswith('/'):
+        return normalize_url(settings.base_url, href)
+    if href.startswith('../'):
+        return f"{settings.base_url}/{href.replace('../', '')}"
+    return f"{settings.base_url}/catalogue/{href}"
 
 
 def _extract_item(card: Tag, idx: int) -> dict[str, object] | None:
@@ -32,116 +33,60 @@ def _extract_item(card: Tag, idx: int) -> dict[str, object] | None:
         return None
 
     title = normalize_text(title_node.get("title", "") or title_node.get_text(strip=True) if title_node else "")
-    href = str(link_node["href"])
-    # Handle relative URLs - books.toscrape.com uses relative paths like ../../catalogue/book-name_123/index.html
-    if href.startswith('/'):
-        item_url = normalize_url(settings.base_url, href)
-    elif href.startswith('../'):
-        # Convert relative path to absolute URL
-        # ../../catalogue/book-name_123/index.html -> /catalogue/book-name_123/index.html
-        clean_href = href.replace('../', '')
-        item_url = f"{settings.base_url}/{clean_href}"
-    else:
-        # Assume it's a relative path from catalogue directory
-        item_url = f"{settings.base_url}/catalogue/{href}"
-    
+    item_url = _build_url(str(link_node["href"]))
     price_text = normalize_text(price_node.get_text(strip=True) if price_node else "")
     price_value = parse_price_value(price_text)
     price_inr = round(price_value * settings.eur_to_inr_rate, 2) if price_value is not None else None
-    price_inr_text = f"INR {price_inr:.2f}" if price_inr is not None else "N/A"
 
     return {
-        "id": _item_id_from_url(item_url, idx),
+        "id": _id_from_url(item_url, idx),
         "title": title or "Untitled",
         "seller": "Books to Scrape",
         "url": item_url,
-        "price": price_inr_text,
+        "price": f"INR {price_inr:.2f}" if price_inr is not None else "N/A",
         "price_inr": price_inr,
         "scraped_date": date.today().isoformat(),
     }
 
 
-def _build_page_url(page_num: int) -> str:
+def _page_url(page_num: int) -> str:
     if page_num == 1:
         return urljoin(settings.base_url, settings.listing_path)
-    # For books.toscrape.com format: /catalogue/page-2.html
-    base_url = settings.base_url.rstrip('/')
-    if page_num > 1:
-        return f"{base_url}/catalogue/page-{page_num}.html"
-    return f"{base_url}/catalogue/page-1.html"
+    return f"{settings.base_url.rstrip('/')}/catalogue/page-{page_num}.html"
 
 
 def fetch_listing_items(page: Page) -> list[dict[str, object]]:
-    """Scrape listing pages using Playwright and return minimal item records."""
     results: list[dict[str, object]] = []
-    seen_urls: set[str] = set()
+    seen: set[str] = set()
 
-    # Create progress bar for pages
-    page_progress = tqdm(
-        range(1, settings.max_pages + 1),
-        desc="📄 Scraping pages",
-        unit="page",
-        dynamic_ncols=True
-    )
-
-    for page_num in page_progress:
-        page_url = _build_page_url(page_num)
-        page_progress.set_postfix_str(f"Page {page_num}")
-        logger.info("Fetching listing page {}", page_url)
+    for page_num in tqdm(range(1, settings.max_pages + 1), desc="Scraping pages", unit="page"):
+        page_url = _page_url(page_num)
+        logger.info("Fetching page {}", page_url)
 
         try:
-            # Use Playwright to navigate and get content
-            logger.info("Navigating to: {}", page_url)
-            response = page.goto(page_url, timeout=30000, wait_until="domcontentloaded")
-            logger.info("Navigation response status: {}", response.status if response else "No response")
-            html_content = page.content()
-            logger.info("Page content length: {} chars", len(html_content))
+            page.goto(page_url, timeout=30000, wait_until="domcontentloaded")
+            html = page.content()
         except Exception as exc:
-            logger.error("Failed to fetch page {}: {}", page_num, exc)
-            page_progress.close()
+            logger.error("Failed page {}: {}", page_num, exc)
             break
 
-        soup = BeautifulSoup(html_content, "lxml")
+        soup = BeautifulSoup(html, "lxml")
         cards = soup.select(settings.item_selector)
         logger.info("Found {} cards on page {}", len(cards), page_num)
+
         if not cards:
-            logger.info("Stopping pagination at page {} (no cards found)", page_num)
-            page_progress.close()
             break
 
-        # Progress bar for items on current page
-        item_progress = tqdm(
-            cards,
-            desc=f"📚 Page {page_num} items",
-            unit="item",
-            leave=False,
-            dynamic_ncols=True
-        )
-
-        page_new_count = 0
-        for idx, card in enumerate(item_progress, start=1):
-            parsed = _extract_item(card, idx)
-            if parsed is None:
+        new_count = 0
+        for idx, card in enumerate(cards, start=1):
+            item = _extract_item(card, idx)
+            if item is None or item["url"] in seen:
                 continue
-            if parsed["url"] in seen_urls:
-                continue
-            seen_urls.add(parsed["url"])
-            results.append(parsed)
-            page_new_count += 1
-            item_progress.set_postfix_str(f"New: {page_new_count}")
+            seen.add(item["url"])
+            results.append(item)
+            new_count += 1
 
-        item_progress.close()
-
-        if page_new_count == 0:
-            logger.info(
-                "Stopping pagination at page {} (no new unique items)",
-                page_num,
-            )
-            page_progress.close()
+        if new_count == 0:
             break
 
-        # Update main progress with total items found so far
-        page_progress.set_postfix_str(f"Items: {len(results)}")
-
-    page_progress.close()
     return results

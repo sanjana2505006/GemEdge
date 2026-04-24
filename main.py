@@ -1,10 +1,7 @@
-"""Entry point for the GemEdge assignment scaffold."""
-
 from scraper.pipeline import run_pipeline
 
 
-def main() -> None:
-    """Run the minimal scraping pipeline."""
+def main():
     run_pipeline()
 
 

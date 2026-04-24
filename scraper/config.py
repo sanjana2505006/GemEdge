@@ -1,7 +1,5 @@
-"""Configuration for the scraper project."""
-
-from dataclasses import dataclass
 import os
+from dataclasses import dataclass
 
 from dotenv import load_dotenv
 
@@ -10,8 +8,6 @@ load_dotenv()
 
 @dataclass(frozen=True)
 class Settings:
-    """Runtime settings loaded from environment variables."""
-
     base_url: str = os.getenv("BASE_URL", "https://example.com")
     listing_path: str = os.getenv("LISTING_PATH", "/")
     item_selector: str = os.getenv("ITEM_SELECTOR", "article")
@@ -34,10 +30,7 @@ class Settings:
     eur_to_inr_rate: float = float(os.getenv("EUR_TO_INR_RATE", "109.86"))
     output_dir: str = os.getenv("OUTPUT_DIR", "output")
     seen_urls_file: str = os.getenv("SEEN_URLS_FILE", "output/seen_urls.json")
-    failed_detail_items_file: str = os.getenv(
-        "FAILED_DETAIL_ITEMS_FILE",
-        "output/failed_detail_items.json",
-    )
+    failed_detail_items_file: str = os.getenv("FAILED_DETAIL_ITEMS_FILE", "output/failed_detail_items.json")
     logs_dir: str = os.getenv("LOGS_DIR", "logs")
     headless: bool = os.getenv("HEADLESS", "true").lower() == "true"
 
