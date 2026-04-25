@@ -2,7 +2,7 @@
 
 A Python scraper that pulls structured book data from [books.toscrape.com](https://books.toscrape.com) and saves it as CSV and JSON with prices in INR.
 
-![Dashboard Preview](dashboard_preview.png)
+![Dashboard Preview](assets/dashboard_preview.png)
 
 ---
 
