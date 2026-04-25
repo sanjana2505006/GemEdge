@@ -66,6 +66,7 @@ def category_chart(data):
     if 'category' not in df.columns:
         return None
     counts = df['category'].value_counts().sort_values(ascending=True)
+    counts.index = [c if c != 'Default' else 'General' for c in counts.index]
     palette = [
         '#6366f1', '#0ea5e9', '#10b981', '#f59e0b', '#ef4444',
         '#8b5cf6', '#14b8a6', '#f97316', '#ec4899', '#84cc16',
@@ -86,7 +87,7 @@ def category_chart(data):
         yaxis_title='',
         template='plotly_white',
         margin=dict(l=120, r=40, t=20, b=40),
-        height=max(300, len(counts) * 22),
+        height=max(400, len(counts) * 28),
     )
     d = fig.to_dict()
     return json.dumps({'data': d['data'], 'layout': d['layout']}, cls=plotly.utils.PlotlyJSONEncoder)
@@ -111,7 +112,7 @@ def api_data():
     search = request.args.get('search', '').lower()
 
     if category:
-        data = [i for i in data if i.get('category', '').lower() == category.lower()]
+        data = [i for i in data if (i.get('category', '') or 'Default').replace('Default', 'General').lower() == category.lower()]
     if min_price is not None:
         data = [i for i in data if i.get('price_inr', 0) >= min_price]
     if max_price is not None:
@@ -130,7 +131,7 @@ def api_stats():
 @app.route('/api/categories')
 def api_categories():
     data = load_data()
-    cats = sorted(set(i.get('category', '') for i in data if i.get('category')))
+    cats = sorted(set((i.get('category', '') or 'Default').replace('Default', 'General') for i in data if i.get('category')))
     return jsonify(cats)
 
 

@@ -173,7 +173,7 @@
                 <tr>
                     <td class="px-3 py-3 font-medium text-slate-800 max-w-xs">${book.title || 'Untitled'}</td>
                     <td class="px-3 py-3">
-                        <span class="px-2 py-0.5 text-xs bg-sky-100 text-sky-700 rounded-full">${book.category || '—'}</span>
+                        <span class="px-2 py-0.5 text-xs bg-sky-100 text-sky-700 rounded-full">${(book.category === 'Default' ? 'General' : book.category) || '—'}</span>
                     </td>
                     <td class="px-3 py-3 font-semibold text-emerald-600 whitespace-nowrap">${book.price || 'N/A'}</td>
                     <td class="px-3 py-3 text-amber-400 whitespace-nowrap">${stars}</td>
